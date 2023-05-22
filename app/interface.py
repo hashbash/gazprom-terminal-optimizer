@@ -23,7 +23,7 @@ terminal_list = [models.Terminal(tid=x['TID'],
 with st.sidebar:
     _funding_rate = st.slider('Funding rate, %', min_value=0.0, max_value=20.0, value=7.5, step=0.5)
     _collection_price = st.slider('Collection price, rur', min_value=0, max_value=2000, value=1000, step=100)
-    _truck_daily_expenses = st.slider('Truck daily expenses, rur', min_value=0, max_value=50000, value=20000, step=1000)
+    _truck_daily_expenses = st.slider('Truck daily expenses, rur', min_value=0, max_value=200000, value=20000, step=1000)
     _collection_limit = st.slider('Max allowed collections', min_value=0, max_value=2000, value=50, step=10)
     metrics = st.multiselect(
         'Metrics',
