@@ -14,18 +14,6 @@ class Terminal:
 
 
 @dataclass
-class BankTruck:
-    tid: int
-
-
-@dataclass
-class BankTuckPath:
-    dt: datetime
-    bank_truck: BankTruck
-    terminals: List[Terminal]
-
-
-@dataclass
 class DailyExpenses:
     dt: datetime
     funding: float
@@ -35,3 +23,16 @@ class DailyExpenses:
 
     def total_expenses(self):
         return self.total_collection + self.total_funding + self.truck_expenses
+
+
+@dataclass
+class Path:
+    prev_tid: int
+    durations: List[float]
+    terminals: List[Terminal]
+    total_drive_duration: float
+    total_stop_duration: float
+    total_terminals: int
+
+    def total_duration(self):
+        return self.total_drive_duration + self.total_stop_duration
