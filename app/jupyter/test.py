@@ -32,6 +32,8 @@ for t in uniq_terminals:
 time_matrix = list([list(x) for x in sample_df.pivot_table('Total_Time', 'from_idx', 'to_idx', fill_value=0).values])
 
 
+print('Finished load data')
+
 """Capacited Vehicles Routing Problem (CVRP)."""
 
 from ortools.constraint_solver import routing_enums_pb2
