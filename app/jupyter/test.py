@@ -43,7 +43,7 @@ def create_data_model():
     data = {}
     data['time_matrix'] = time_matrix
     data['demands'] = [0] + [terminal_dict[x] for x in uniq_terminals]
-    data['vehicle_capacities'] = 4 * [9990000, 9990000, 9990000, 9990000]
+    data['vehicle_capacities'] = [9990000, 9990000, 9990000, 9990000]
     data['num_vehicles'] = 4
     data['depot'] = 0
     return data
