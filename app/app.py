@@ -41,8 +41,8 @@ def graph_simulate():
     simulator = GraphSimulator(collection_limit=500, collection_price=config.COLLECTION_PRICE,
                                funding_rate=config.FUNDING_RATE,
                                truck_expenses=config.DAILY_EXPENSES_PER_TRUCK,
-                               terminals_list=terminal_list, dt_list=dt_columns, data=df, time_matrix=time_matrix,
-                               max_time_to_next_point_min=30)
+                               terminals_list=terminal_list[:10], dt_list=dt_columns, data=df, time_matrix=time_matrix,
+                               max_time_to_next_point_min=60)
     simulator.calculate()
 
 

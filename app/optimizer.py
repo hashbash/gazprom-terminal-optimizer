@@ -34,6 +34,7 @@ class GraphOptimizer:
 
         terminals = self.terminals_dict.keys()
         counter = 0
+        print(len(terminals), len(local_variants))
         while True:
             out_variants = dict()
             for key, variant in local_variants.items():
@@ -69,7 +70,6 @@ class GraphOptimizer:
             local_variants = out_variants.copy()
             print('Counter %s : %s' % (counter, len(local_variants)))
             counter += 1
-            if counter > 2:
-                raise
             if not out_variants:
+                print(finished_variants[:3])
                 break
