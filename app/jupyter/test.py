@@ -19,7 +19,7 @@ terminal_dict = {x['TID']: x['остаток на 31.08.2022 (входящий)'
 
 times_df = pd.read_csv('../static/times v4.csv')
 
-sample_df = times_df[(times_df.Origin_tid % 20 == 0) & (times_df.Destination_tid % 20 == 0)].reset_index(drop=True)
+sample_df = times_df[(times_df.Origin_tid % 1 == 0) & (times_df.Destination_tid % 1 == 0)].reset_index(drop=True)
 uniq_terminals = list(set(set(sample_df.Origin_tid.values) & set(sample_df.Destination_tid.values)))
 sample_df['from_idx'] = sample_df.Origin_tid.apply(lambda x: uniq_terminals.index(x) + 1)
 sample_df['to_idx'] = sample_df.Destination_tid.apply(lambda x: uniq_terminals.index(x) + 1)
