@@ -133,7 +133,7 @@ def solve(min_remain=_min_remain, vehicle_count=_truck_count, service_time=_stop
         routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
     search_parameters.local_search_metaheuristic = (
         routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH)
-    search_parameters.time_limit.FromSeconds(3) # solution_time
+    search_parameters.time_limit.FromSeconds(solution_time)
 
     # Solve the problem.
     assignment = routing.SolveWithParameters(search_parameters)
