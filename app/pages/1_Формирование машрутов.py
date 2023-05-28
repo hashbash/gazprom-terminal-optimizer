@@ -49,7 +49,7 @@ with st.sidebar:
     _solution_time = st.slider('Время на создание маршрута, сек', min_value=10, max_value=60, value=10, step=10)
 
 
-st.title('Формирование маршрута c учетом расходов на остаток в банкомате')
+st.title('Формирование маршрута c учетом расходов на остаток')
 
 
 def get_raw_data(min_remain: float, vehicle_count: int):
