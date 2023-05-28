@@ -107,3 +107,6 @@ webencodings==0.5.1
 websocket-client==1.5.2
 widgetsnbextension==4.0.7
 zipp==3.15.0
+
+streamlit~=1.22.0
+pydeck~=0.8.1b0

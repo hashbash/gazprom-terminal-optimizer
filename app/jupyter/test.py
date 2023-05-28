@@ -19,8 +19,11 @@ terminal_dict = {x['TID']: x['остаток на 31.08.2022 (входящий)'
 
 times_df = pd.read_csv('../static/times v4.csv')
 
-sample_df = times_df[(times_df.Origin_tid % 5 == 0) & (times_df.Destination_tid % 5 == 0)].reset_index(drop=True)
+sample_df = times_df[(times_df.Origin_tid % 20 == 0) & (times_df.Destination_tid % 20 == 0)].reset_index(drop=True)
 uniq_terminals = list(set(set(sample_df.Origin_tid.values) & set(sample_df.Destination_tid.values)))
+
+print(uniq_terminals)
+print(len(uniq_terminals))
 sample_df['from_idx'] = sample_df.Origin_tid.apply(lambda x: uniq_terminals.index(x) + 1)
 sample_df['to_idx'] = sample_df.Destination_tid.apply(lambda x: uniq_terminals.index(x) + 1)
 
@@ -56,12 +59,14 @@ def print_solution(data, manager, routing, assignment):
     print(f'Objective: {assignment.ObjectiveValue()}')
     # Display dropped nodes.
     dropped_nodes = 'Dropped nodes:'
+    dropped_count = 0
     for node in range(routing.Size()):
         if routing.IsStart(node) or routing.IsEnd(node):
             continue
         if assignment.Value(routing.NextVar(node)) == node:
+            dropped_count += 1
             dropped_nodes += ' {}'.format(manager.IndexToNode(node))
-    print(dropped_nodes)
+    print(dropped_count, ':', dropped_nodes)
     # Display routes
     total_distance = 0
     total_load = 0
@@ -110,12 +115,19 @@ def main():
         # Convert from routing variable Index to distance matrix NodeIndex.
         from_node = manager.IndexToNode(from_index)
         to_node = manager.IndexToNode(to_index)
-        return data['time_matrix'][from_node][to_node]
+        return data['time_matrix'][from_node][to_node] + 10
 
     transit_callback_index = routing.RegisterTransitCallback(distance_callback)
 
     # Define cost of each arc.
     routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
+
+    routing.AddDimension(
+        transit_callback_index,
+        0,  # no slack
+        500,  # vehicle maximum travel time
+        True,  # start cumul to zero
+        'vehicle_travel_time')
 
     # Add Capacity constraint.
     def demand_callback(from_index):
@@ -132,7 +144,7 @@ def main():
         data['vehicle_capacities'],  # vehicle maximum capacities
         True,  # start cumul to zero
         'Capacity')
-    # Allow to drop nodes.
+    # # Allow to drop nodes.
     penalty = 1000
     for node in range(1, len(data['time_matrix'])):
         routing.AddDisjunction([manager.NodeToIndex(node)], penalty)
@@ -143,7 +155,7 @@ def main():
         routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
     search_parameters.local_search_metaheuristic = (
         routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH)
-#     search_parameters.time_limit.FromSeconds(1)
+    search_parameters.time_limit.FromSeconds(5)
 
     # Solve the problem.
     assignment = routing.SolveWithParameters(search_parameters)
@@ -151,6 +163,8 @@ def main():
     # Print solution on console.
     if assignment:
         print_solution(data, manager, routing, assignment)
+    else:
+        print('Cannot find solution')
 
 
 main()

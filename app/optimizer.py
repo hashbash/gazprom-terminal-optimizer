@@ -1,5 +1,4 @@
 from typing import List, Dict
-from itertools import product
 import models
 
 

@@ -26,6 +26,16 @@ class DailyExpenses:
 
 
 @dataclass
+class DailyExpensesFlat:
+    dt: datetime
+    funding: float
+    collection: float
+    truck: float
+    collection_count: int
+    total_expenses: float
+
+
+@dataclass
 class Path:
     prev_tid: int
     durations: List[float]

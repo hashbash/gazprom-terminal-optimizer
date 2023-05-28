@@ -2,7 +2,7 @@ import pandas as pd
 from collections import defaultdict
 import models
 import config
-from simulator import NaiveSimulator, GraphSimulator
+from opt_simulator import NaiveSimulator, GraphSimulator
 
 
 def naive_simulate():
